@@ -29,7 +29,7 @@
             height: 100%;
             object-fit: cover;
             z-index: -1;
-            filter: brightness(0.5); /* Videoyu biraz karartmak için */
+            filter: brightness(0.5);
         }
 
         /* Sayfa içeriği */
@@ -43,11 +43,12 @@
             min-height: 100vh;
             color: #fff;
             text-align: center;
+            padding: 20px;
         }
 
         h1 {
-            font-size: 3em;
-            margin-bottom: 50px;
+            font-size: 2.5em;
+            margin-bottom: 40px;
             text-shadow: 2px 2px 10px rgba(0,0,0,0.7);
             animation: fadeIn 2s ease-in-out forwards;
             opacity: 0;
@@ -59,15 +60,15 @@
 
         .gallery {
             display: flex;
-            gap: 30px;
+            gap: 20px;
             flex-wrap: wrap;
             justify-content: center;
         }
 
         .photo {
             position: relative;
-            width: 250px;
-            height: 250px;
+            width: 200px;
+            height: 200px;
             border-radius: 20px;
             overflow: hidden;
             box-shadow: 0 10px 20px rgba(0,0,0,0.5);
@@ -93,18 +94,14 @@
             color: #fff;
             width: 100%;
             text-align: center;
-            padding: 10px 0;
+            padding: 8px 0;
             font-weight: 600;
             opacity: 0;
             transition: opacity 0.3s;
         }
 
-        .photo:hover .info {
-            opacity: 1;
-        }
-
         .music-controls {
-            margin-top: 40px;
+            margin-top: 30px;
         }
 
         .music-controls button {
@@ -125,14 +122,25 @@
         }
 
         audio {
-            display: none; /* Butonla kontrol edeceğiz */
+            display: none;
+        }
+
+        /* Mobil uyum için */
+        @media (max-width: 500px) {
+            .photo {
+                width: 140px;
+                height: 140px;
+            }
+            h1 {
+                font-size: 2em;
+            }
         }
     </style>
 </head>
 <body>
 
     <!-- Arka plan video -->
-    <video id="bg-video" autoplay loop muted>
+    <video id="bg-video" autoplay loop muted playsinline>
         <source src="dans.mp4" type="video/mp4">
         Tarayıcınız video etiketini desteklemiyor.
     </video>
@@ -177,6 +185,15 @@
                 music.pause();
                 playPauseBtn.textContent = "Müziği Başlat";
             }
+        });
+
+        // Mobil dokunma ile mesaj göster
+        const photos = document.querySelectorAll('.photo');
+        photos.forEach(photo => {
+            photo.addEventListener('click', () => {
+                const info = photo.querySelector('.info');
+                info.style.opacity = info.style.opacity === '1' ? '0' : '1';
+            });
         });
     </script>
 
